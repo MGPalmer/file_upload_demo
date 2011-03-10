@@ -1,0 +1,22 @@
+<h1>
+  Upload stuff !
+</h1>
+<h2>
+  Do it now before it's too late !
+</h2>
+<div id="file-uploader">
+  <fieldset>
+    <legend>
+      Pick your poison
+    </legend>
+    <% form_for @upload, {:html => {:multipart => true}} do |f| %>
+      <%= f.error_messages %>
+      <%= f.hidden_field :uuid %>
+      <%= f.file_field :data %>
+      <br/>
+      <%= f.text_field :comment %>
+      <br/>
+      <%= f.submit %>
+    <% end %>
+  </fieldset>
+</div>

@@ -1,0 +1,11 @@
+<h1>
+Well done, comrade !
+</h1>
+<p>
+  <%= h @upload.comment || "no comment" %>
+  <br/>
+  <%= link_to @upload.path, "/uploads/" + @upload.uuid %>
+</p>
+<p>
+  <%= link_to "Again ?", :action => "new" %>
+</p>
