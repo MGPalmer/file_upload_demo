@@ -13,7 +13,7 @@ ActiveRecord::Schema.define(:version => 20110310203456) do
 
   create_table "uploads", :force => true do |t|
     t.string   "uuid"
-    t.string   "path"
+    t.string   "original_filename"
     t.string   "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
