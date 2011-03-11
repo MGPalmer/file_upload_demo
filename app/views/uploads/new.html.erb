@@ -9,9 +9,8 @@
     <legend>
       Pick your poison
     </legend>
-    <% form_for @upload, {:html => {:multipart => true}} do |f| %>
+    <% form_for @upload, {:html => {:multipart => true}, :url => {:controller => "uploads", 'X-Progress-ID' => @upload.uuid}} do |f| %>
       <%= f.error_messages %>
-      <%= f.hidden_field :uuid %>
       <%= f.file_field :data %>
       <br/>
       <%= f.text_field :comment %>
@@ -20,3 +19,21 @@
     <% end %>
   </fieldset>
 </div>
+<% content_for :script do %>
+  <script>
+    $(document).ready(function() {
+      var uploader = new qq.FileUploader({
+        // pass the dom node (ex. $(selector)[0] for jQuery users)
+        element: document.getElementById('file-uploader'),
+        // path to server-side upload script
+        action: '/uploads',
+        params: {
+            'authenticity_token': '<%= form_authenticity_token %>',
+            'X-Progress-ID': '<%= @upload.uuid %>'
+        },
+        debug: true,
+        showMessage: function(message){ alert(message); }
+      });
+    })
+  </script>
+<% end %>
