@@ -1,0 +1,23 @@
+Von Stackoverflow:
+
+http://jimneath.org/2008/05/15/swfupload-paperclip-and-ruby-on-rails/
+http://swfupload.org/
+http://railstips.org/blog/archives/2009/07/21/uploadify-and-rails23/
+http://www.uploadify.com/
+http://www.plupload.com
+http://digitarald.de/project/fancyupload/
+http://developer.yahoo.com/yui/uploader/
+
+Alles mit Flash
+
+In Perl:
+http://uber-uploader.sourceforge.net
+
+Ohne Flash:
+
+http://stackoverflow.com/questions/2714507/jquery-ajax-upload-with-progress-bar-no-flash
+
+
+Musterlösung für die Aufgabe:
+https://github.com/rngtng/FileUploadProgress
+http://valums.com/ajax-upload/
