@@ -1,23 +1,45 @@
-Von Stackoverflow:
+Homework:
 
-http://jimneath.org/2008/05/15/swfupload-paperclip-and-ruby-on-rails/
-http://swfupload.org/
-http://railstips.org/blog/archives/2009/07/21/uploadify-and-rails23/
-http://www.uploadify.com/
-http://www.plupload.com
-http://digitarald.de/project/fancyupload/
-http://developer.yahoo.com/yui/uploader/
+There's a lot of file upload handling code and examples out there, especiall for the frontend part.
+Here's a list:
 
-Alles mit Flash
+Flash based frontend libraries:
 
-In Perl:
-http://uber-uploader.sourceforge.net
+  * http://jimneath.org/2008/05/15/swfupload-paperclip-and-ruby-on-rails/
+  * http://swfupload.org/
+  * http://railstips.org/blog/archives/2009/07/21/uploadify-and-rails23/
+  * http://www.uploadify.com/
+  * http://www.plupload.com
+  * http://digitarald.de/project/fancyupload/
+  * http://developer.yahoo.com/yui/uploader/
 
-Ohne Flash:
+A complete Perl solution:
 
-http://stackoverflow.com/questions/2714507/jquery-ajax-upload-with-progress-bar-no-flash
+  * http://uber-uploader.sourceforge.net
 
+Here's a good list of non-flash options:
 
-Musterlösung für die Aufgabe:
-https://github.com/rngtng/FileUploadProgress
-http://valums.com/ajax-upload/
+  * http://stackoverflow.com/questions/2714507/jquery-ajax-upload-with-progress-bar-no-flash
+
+There are also two complete challenge solutions to be found:
+
+  * https://github.com/rngtng/FileUploadProgress
+  * http://valums.com/ajax-upload/
+
+For the backend, there are some Java Based ones (there's one from the apache project), lots of PHP
+hacks, and you could always roll your own.
+
+Or, this:
+
+  * http://github.com/drogus/apache-upload-progress-module
+
+Stack used:
+
+  * Apache2
+  * Passenger
+  * REE 1.8.7
+  * Rails 2.3.11
+  * http://github.com/drogus/apache-upload-progress-module
+  * http://html5boilerplate.com/
+  * https://github.com/valums/file-uploader
+  * A self-rolled Upload model
