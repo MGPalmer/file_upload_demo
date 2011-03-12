@@ -24,7 +24,7 @@ Here's a good list of non-flash options:
 There are also two complete challenge solutions to be found:
 
   * https://github.com/rngtng/FileUploadProgress
-  * http://valums.com/ajax-upload/
+  * https://github.com/betten/SoundCloud-Developer-Challenge
 
 For the backend, there are some Java Based ones (there's one from the apache project), lots of PHP
 hacks, and you could always roll your own.
