@@ -8,6 +8,13 @@ class UploadsController < ApplicationController
     @upload = Upload.find(params[:id])
   end
 
+  def update
+    @upload = Upload.find(params[:id])
+    @upload.update_attribute(:title, params[:title])
+    render :json => {:path => @upload.path, :title => @upload.title, :url => upload_url(@upload)}
+    # TODO: errors ?
+  end
+
   def create
     if request.xhr?
       ajax_upload(request, params)
@@ -23,10 +30,9 @@ class UploadsController < ApplicationController
       :original_filename => params['qqfile'],
       :uuid => params['X-Progress-ID'],
       :data => request.body
-      # TODO: comment
      )
     if @upload.save
-      render :json => {:success => true}
+      render :json => {:success => true, :id => @upload.id}
     else
       #TODO
     end

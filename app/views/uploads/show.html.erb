@@ -2,9 +2,9 @@
 Well done, comrade !
 </h1>
 <p>
-  <%= h(@upload.comment.blank? ? "no comment" : @upload.comment) %>
+  Title: <%= h @upload.title %>
   <br/>
-  <%= link_to(@upload.original_filename || @upload.uuid, "/uploads/" + @upload.uuid) %> (<%= @upload.size / 1024 %> kb)
+  File: <%= link_to(@upload.original_filename || @upload.uuid, "/uploads/" + @upload.uuid) %> (<%= @upload.size / 1024 %> kb)
 </p>
 <p>
   <%= link_to "Again ?", :action => "new" %>

@@ -4,35 +4,81 @@
 <h2>
   Do it now before it's too late !
 </h2>
-<div id="file-uploader">
-  <fieldset>
-    <legend>
-      Pick your poison
-    </legend>
-    <% form_for @upload, {:html => {:multipart => true}, :url => {:controller => "uploads", 'X-Progress-ID' => @upload.uuid}} do |f| %>
-      <%= f.error_messages %>
-      <%= f.file_field :data %>
-      <br/>
-      <%= f.text_field :comment %>
-      <br/>
-      <%= f.submit %>
-    <% end %>
-  </fieldset>
+<div id="upload-container" style="display:none;">
+  Type a title for your upload:
+  <input type="text" name="upload-comment" id="upload-comment"/>
+  <br/>
+  <span id="upload-comment-result">Title will be displayed here</span>
+  <br/>
+  <span id="upload-result-link">Link to result will be displayed here</span>
+  <br/>
+  Upload status: <span id="upload-status">select file</span>
 </div>
+<div id="file-uploader">
+  <% form_for @upload, {:html => {:multipart => true}, :url => {:controller => "uploads", 'X-Progress-ID' => @upload.uuid}} do |f| %>
+    <%= f.error_messages %>
+    <%= f.file_field :data %>
+    <br/>
+    Type a title for your upload:
+    <%= f.text_field :title %>
+    <br/>
+    <%= f.submit "Upload !" %>
+  <% end %>
+</div>
+<%= link_to "Reload", :action => "new" %>
 <% content_for :script do %>
-  <script>
+  <script type="text/javascript">
     $(document).ready(function() {
+      // Display the additional title field and progress elements only if JS is enabled.
+      // The non-JS form is replaced when the FileUploader is initialized
+      $('#upload-container').show();
       var uploader = new qq.FileUploader({
         // pass the dom node (ex. $(selector)[0] for jQuery users)
         element: document.getElementById('file-uploader'),
         // path to server-side upload script
         action: '/uploads',
         params: {
-            'authenticity_token': '<%= form_authenticity_token %>',
-            'X-Progress-ID': '<%= @upload.uuid %>'
+          'authenticity_token': '<%= form_authenticity_token %>',
+          'X-Progress-ID': '<%= @upload.uuid %>'
         },
         debug: true,
-        showMessage: function(message){ alert(message); }
+        showMessage: function(message){ alert(message); },
+        // Adding an AJAX-based progress display - this queries the apache upload progress endpoint.
+        // Mainly for showing off ;), the JS FileUpload progress seems pretty accurate
+        onProgress: function(id, fileName, loaded, total){
+          $.ajax({
+            type: "GET",
+            url: '/progress?' + 'X-Progress-ID=<%= @upload.uuid %>',
+            dataType: 'json',
+            success: function(response) {
+              if(response.state == "uploading") {
+                $('#upload-status').text(Math.round(response.received / response.size * 100) + '% uploaded, saving...')
+              } else {
+                $('#upload-status').text('uploaded ' + response.size + ' bytes')
+              }
+            }
+          })
+        },
+        // Additional handler for the title, update it with an AJAX request, also using it
+        // to show the results of the upload.
+        // TODO: This needs more handling for error cases, especially when the original upload
+        // failed
+        onComplete: function(id, fileName, responseJSON){
+          $.ajax({
+            type: "PUT",
+            url: '/uploads/' + responseJSON.id,
+            data: {
+              'authenticity_token': '<%= form_authenticity_token %>',
+              'title': $('#upload-comment').val()
+            },
+            dataType: 'json',
+            success: function(response) {
+              $('#upload-status').text('"' + response.path + '"')
+              $('#upload-comment-result').text('Title saved: "' + response.title + '"')
+              $('#upload-result-link').replaceWith('<a href="' + response.url + '">See the result !</a>')
+            }
+          });
+        }
       });
     })
   </script>

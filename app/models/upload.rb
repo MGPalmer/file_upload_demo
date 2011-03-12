@@ -6,7 +6,7 @@ class Upload < ActiveRecord::Base
   validates_presence_of :data, :message => "Please choose a file to upload."
 
   before_save :save_original_filename
-  after_save :save_to_disk
+  after_create :save_to_disk
 
   def initialize(*args)
     super
@@ -15,6 +15,11 @@ class Upload < ActiveRecord::Base
 
   def path
     File.join(Rails.root, "public", "uploads", uuid)
+  end
+
+  def title
+    t = self[:title]
+    t.blank? ? "no title given" : t
   end
 
   def size
