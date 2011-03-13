@@ -72,8 +72,6 @@ Or, this:
 
 --------------------------------------------------------------------------------
 
-Deeds done:
-
 Stack used:
 
   * Apache2
@@ -87,13 +85,49 @@ Stack used:
 
 --------------------------------------------------------------------------------
 
+Notes:
+
+This fulfills the requirements as far as I can see. Bonus features:
+
+* Non-JS fallback
+* Specs
+* Error handling for JS version
+
+I've used the older Ruby/Rails versions because I'm most familiar with them, and
+didn't have the time to dig into Rails 3 for this challenge.
+
+The Apache upload progress module isn't technically necessary as the JS FileUploader
+lib does a pretty good job of getting the progress right, but I had already built most
+of the progress tracking before I realized that.
+
+I created by own Upload model because I wanted to try out how well this would work,
+and I was wary of any baggage a lib like Paperclip would bring. In a real app, there
+would most likely be more requirements for the file handling and tracking which I can't guess,
+which would make Paperclip a better choice. Plus, I didn't want to do a complete copy
+of the other solution on Github...
+
+I've built the non-JS upload version first to make sure I get the model/controller right,
+and kept it as a fallback option (However unlikely a non-JS browser is these days).
+Well, at least lynx users can also use the upload :)
+
+I didn't do any frontend specs (i.e. JS/HTML checks) because those get quite messy
+in my experience - one should use Selenium and/or a QA person to check things like that.
+
+The pages look like crap - quite frankly I'm not good with CSS and layouts,
+but prettyness wasn't a requirement ;)
+
+All in all, I'm surprised that there is so much to be done to get a well-working
+upload progress feature. Chrome already shows an upload percentage natively when using
+the non-JS file upload, so hopefully browsers will eventually support this natively (like
+HTTP authentication improved a lot lately).
+
+--------------------------------------------------------------------------------
+
 TODO:
-  * Error handling in JS
-  * specs
   * Cronjob to clean up old files
-  * deploy
+  * Deploy on a server
   * Limit file size
-  * Test with other browsers
+  * Check in Apache config
+  * Test with more browsers. Working:
   ** Ubuntu 10.04/Chrome 5.0.342.9 beta
   ** Ubuntu 10.04/Firefox 3.6.15
-  * Write more here
