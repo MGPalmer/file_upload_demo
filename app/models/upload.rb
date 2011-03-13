@@ -1,6 +1,6 @@
 class Upload < ActiveRecord::Base
 
-  attr_accessor :data
+  attr_accessor :data, :file
 
   validates_presence_of :uuid
   validates_presence_of :data, :message => "Please choose a file to upload."
@@ -12,6 +12,7 @@ class Upload < ActiveRecord::Base
   def initialize(*args)
     super
     self.uuid ||= UUID.generate(:compact)
+    self.data ||= self.file.read if self.file
   end
 
   def path
@@ -29,12 +30,12 @@ class Upload < ActiveRecord::Base
 
   def save_to_disk
     File.open(path, "wb") do |f|
-      f.write(self.data.read)
+      f.write(data)
     end
   end
 
   def save_original_filename
-    self.original_filename ||= self.data.original_filename
+    self.original_filename ||= self.file.original_filename
   end
 
   def delete_file

@@ -28,7 +28,7 @@ class UploadsController < ApplicationController
     @upload = Upload.new(
       :original_filename => params['qqfile'],
       :uuid => params['X-Progress-ID'],
-      :data => request.body
+      :file => request.body
      )
     if @upload.save
       render :json => {:success => true, :id => @upload.id}

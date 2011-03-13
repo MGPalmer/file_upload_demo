@@ -2,13 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Upload do
   before(:each) do
-    @file_data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-    @original_filename = "Motörhead electro dance remix IXX.mp3"
-    @valid_attributes = {
-      :uuid => "schnippschnappschnupp",
-      :title => "best track ever !",
-      :data => mock("FileObject", :read => @file_data, :original_filename => @original_filename)
-    }
+    setup_upload_instance_vars
   end
 
   it "should create a new instance given valid attributes" do
@@ -22,7 +16,7 @@ describe Upload do
   end
 
   it "'s not valid without data" do
-    Upload.new(@valid_attributes.merge(:data => nil)).should_not be_valid
+    Upload.new(@valid_attributes.merge(:file => nil)).should_not be_valid
   end
 
   it "generates the path from the uuid" do

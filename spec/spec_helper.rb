@@ -51,4 +51,14 @@ Spec::Runner.configure do |config|
   # == Notes
   #
   # For more information take a look at Spec::Runner::Configuration and Spec::Runner
+
+  def setup_upload_instance_vars
+    @file_data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    @original_filename = "Motörhead electro dance remix IXX.mp3"
+    @valid_attributes = {
+      :uuid => "schnippschnappschnupp",
+      :title => "best track ever !",
+      :file => mock("FileObject", :read => @file_data, :original_filename => @original_filename)
+    }
+  end
 end
