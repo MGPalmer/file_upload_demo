@@ -12,7 +12,6 @@ class UploadsController < ApplicationController
     @upload = Upload.find(params[:id])
     @upload.update_attribute(:title, params[:title])
     render :json => {:path => @upload.path, :title => @upload.title, :url => upload_url(@upload)}
-    # TODO: errors ?
   end
 
   def create
@@ -34,7 +33,12 @@ class UploadsController < ApplicationController
     if @upload.save
       render :json => {:success => true, :id => @upload.id}
     else
-      #TODO
+      request.body.read # Apparantly needed - otherwise apache get a broken pipe error
+      render :json => {
+        :success => false,
+        # Should be done in JS, but can't get it working :/
+        :errors => "<ul><li>#{@upload.errors.full_messages.join('</li><li>')}</li></ul>"
+      }
     end
   end
 

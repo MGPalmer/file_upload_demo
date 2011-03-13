@@ -8,7 +8,7 @@
   Type a title for your upload:
   <input type="text" name="upload-comment" id="upload-comment"/>
   <br/>
-  <span id="upload-comment-result">Title will be displayed here</span>
+  <span id="upload-title-result">Title will be displayed here</span>
   <br/>
   <span id="upload-result-link">Link to result will be displayed here</span>
   <br/>
@@ -61,23 +61,26 @@
         },
         // Additional handler for the title, update it with an AJAX request, also using it
         // to show the results of the upload.
-        // TODO: This needs more handling for error cases, especially when the original upload
-        // failed
         onComplete: function(id, fileName, responseJSON){
-          $.ajax({
-            type: "PUT",
-            url: '/uploads/' + responseJSON.id,
-            data: {
-              'authenticity_token': '<%= form_authenticity_token %>',
-              'title': $('#upload-comment').val()
-            },
-            dataType: 'json',
-            success: function(response) {
-              $('#upload-status').text('"' + response.path + '"')
-              $('#upload-comment-result').text('Title saved: "' + response.title + '"')
-              $('#upload-result-link').replaceWith('<a href="' + response.url + '">See the result !</a>')
-            }
-          });
+          if(responseJSON.success == false) {
+            $('#upload-title-result').text("Upload failed, not saving title");
+            $('#upload-status').replaceWith(responseJSON.errors)
+          } else {
+            $.ajax({
+              type: "PUT",
+              url: '/uploads/' + responseJSON.id,
+              data: {
+                'authenticity_token': '<%= form_authenticity_token %>',
+                'title': $('#upload-comment').val()
+              },
+              dataType: 'json',
+              success: function(response) {
+                $('#upload-status').text('"' + response.path + '"')
+                $('#upload-title-result').text('Title saved: "' + response.title + '"')
+                $('#upload-result-link').replaceWith('<a href="' + response.url + '">See the result !</a>')
+              }
+            });
+          }
         }
       });
     })
