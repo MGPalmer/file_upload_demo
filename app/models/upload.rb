@@ -7,6 +7,7 @@ class Upload < ActiveRecord::Base
 
   before_save :save_original_filename
   after_create :save_to_disk
+  after_destroy :delete_file
 
   def initialize(*args)
     super
@@ -34,6 +35,10 @@ class Upload < ActiveRecord::Base
 
   def save_original_filename
     self.original_filename ||= self.data.original_filename
+  end
+
+  def delete_file
+    File.delete(path) if File.exists?(path)
   end
 
 end

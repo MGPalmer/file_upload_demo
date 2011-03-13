@@ -15,5 +15,6 @@ describe UploadsController do
   it "adds the uuid from parameters into model params on create without xhr"
   it "redirects to show after successful save on create without xhr"
   it "shows the form with errors again on create without xhr"
+  it "renders the errors as json and a message for the fileuploader lib with xhr"
 
 end
