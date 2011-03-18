@@ -52,7 +52,7 @@
             dataType: 'json',
             success: function(response) {
               if(response.state == "uploading") {
-                $('#upload-status').text(Math.round(response.received / response.size * 100) + '% uploaded, saving...')
+                $('#upload-status').text(Math.round(response.received / response.size * 100) + '% uploaded')
               } else {
                 $('#upload-status').text('uploaded ' + response.size + ' bytes')
               }
