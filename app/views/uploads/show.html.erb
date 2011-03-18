@@ -4,7 +4,7 @@ Well done, comrade !
 <p>
   Title: <%= h @upload.title %>
   <br/>
-  File: <%= link_to(@upload.original_filename || @upload.uuid, "/uploads/" + @upload.uuid) %> (<%= @upload.size / 1024 %> kb)
+  File: <%= link_to(@upload.original_filename || @upload.uuid, @upload.uuid) %> (<%= @upload.size / 1024 %> kb)
 </p>
 <p>
   <%= link_to "Again ?", :action => "new" %>
