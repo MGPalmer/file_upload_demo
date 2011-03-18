@@ -37,8 +37,8 @@ Any technology that can be web deployed to IE, Firefox, Safari, Chrome
 
 Homework:
 
-There's a lot of file upload handling code and examples out there, especiall for the frontend part.
-Here's a list:
+There's a lot of file upload handling code and examples out there, especially for the frontend part.
+Here's an incomplete list:
 
 Flash based frontend libraries:
 
@@ -87,11 +87,19 @@ Stack used:
 
 Notes:
 
-This fulfills the requirements as far as I can see. Bonus features:
+This fulfills the requirements as far as I can see (except on IE, see below).
+
+Bonus features:
 
 * Non-JS fallback
 * Specs
 * Error handling for JS version
+
+Yes, well, Internet Explorer, how you hate me... The upload progress display doesn't work
+in Internet Explorer (8), because the Ajax Uploader JS library doesn't support this. I
+didn't realize this when starting out with it, and now I don't want to throw away half of the code
+to try with another frontend lib. And I'm not good enough with JS to try to fix it myself in the
+available time.
 
 I've used the older Ruby/Rails versions because I'm most familiar with them, and
 didn't have the time to dig into Rails 3 for this challenge.
@@ -100,10 +108,10 @@ The Apache upload progress module isn't technically necessary as the JS FileUplo
 lib does a pretty good job of getting the progress right, but I had already built most
 of the progress tracking before I realized that.
 
-I created by own Upload model because I wanted to try out how well this would work,
+I created my own Upload model because I wanted to try out how well this would work,
 and I was wary of any baggage a lib like Paperclip would bring. In a real app, there
 would most likely be more requirements for the file handling and tracking which I can't guess,
-which would make Paperclip a better choice. Plus, I didn't want to do a complete copy
+which might make Paperclip a better choice. Plus, I didn't want to do a complete copy
 of the other solution on Github...
 
 I've built the non-JS upload version first to make sure I get the model/controller right,
@@ -125,9 +133,31 @@ HTTP authentication improved a lot lately).
 
 TODO:
   * Cronjob to clean up old files
-  * Deploy on a server
+  * -Deploy on a server-
   * Limit file size
   * Check in Apache config
   * Test with more browsers. Working:
   ** Ubuntu 10.04/Chrome 5.0.342.9 beta
   ** Ubuntu 10.04/Firefox 3.6.15
+  ** Windows 7/Chrome 10
+  ** Windows 7/Firefox 3.6.15
+  ** Windows 7/Internet Explorer 8 - only upload works, progress display is not supported by ajax uploader lib
+  ** Windows 7/Safari 5.0.4
+
+-------------------------
+
+Installation dependencies on vanilla system:
+
+git-core
+apache2
+emacs
+build-essential
+zlib1g-dev
+libssl-dev
+libreadline5-dev
+REE
+libcurl4-openssl-dev
+apache2-prefork-dev
+libapr1-dev
+libaprutil1-dev
+Passenger

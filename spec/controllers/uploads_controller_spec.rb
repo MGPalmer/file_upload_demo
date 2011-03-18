@@ -38,6 +38,15 @@ describe UploadsController do
     JSON.parse(response.body).should == {"success" => true, "id" => u.id}
   end
 
+  it "munges parameters into model form for IE on create with xhr and returns json as text on success" do
+    post :create, :qqfile => mock("IO", :read => "X" * 10, :original_filename => "filename"), 'X-Progress-ID' => "xyz123"
+    u = Upload.find_by_uuid("xyz123")
+    File.open(u.path).read.should == 'X' * 10
+    u.original_filename.should == "filename"
+    JSON.parse(response.body).should == {"success" => true, "id" => u.id}
+    response.headers["Content-Type"].should == "text/html; charset=utf-8"
+  end
+
   it "adds the uuid from parameters into model params and redirects to show on create without xhr" do
     post :create, 'X-Progress-ID' => "xyz123", :upload => { :file => mock("IO", :read => "Y" * 10, :original_filename => "filename"), :title => "the title"}
     u = Upload.find_by_uuid("xyz123")
