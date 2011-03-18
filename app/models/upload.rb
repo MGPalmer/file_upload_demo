@@ -42,4 +42,8 @@ class Upload < ActiveRecord::Base
     File.delete(path) if File.exists?(path)
   end
 
+  def self.clean
+    destroy_all(["created_at <= ?", Time.now.utc - 10.minutes])
+  end
+
 end

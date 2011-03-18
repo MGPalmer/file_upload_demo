@@ -132,7 +132,7 @@ HTTP authentication improved a lot lately).
 --------------------------------------------------------------------------------
 
 TODO:
-  * Cronjob to clean up old files
+  * -Cronjob to clean up old files-
   * -Deploy on a server-
   * Limit file size
   * Check in Apache config

@@ -62,4 +62,13 @@ describe Upload do
     u.destroy
     File.exists?(path).should be_false
   end
+
+  it "cleans files older than 10 minutes with clean" do
+    u1 = Upload.create!(@valid_attributes)
+    u2 = Upload.create!(@valid_attributes)
+    u1.update_attribute(:created_at, Time.now.utc - 10.minutes)
+    lambda {
+      Upload.clean
+    }.should change(Upload, :count).from(2).to(1)
+  end
 end
