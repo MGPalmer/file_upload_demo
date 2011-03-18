@@ -36,7 +36,7 @@
         // pass the dom node (ex. $(selector)[0] for jQuery users)
         element: document.getElementById('file-uploader'),
         // path to server-side upload script
-        action: 'uploads',
+        action: '<%= url_for(:controller => 'uploads') %>',
         params: {
           'authenticity_token': '<%= form_authenticity_token %>',
           'X-Progress-ID': '<%= @upload.uuid %>'
@@ -48,7 +48,7 @@
         onProgress: function(id, fileName, loaded, total){
           $.ajax({
             type: "GET",
-            url: 'progress?' + 'X-Progress-ID=<%= @upload.uuid %>',
+            url: '<%= url_for :controller => "progress", 'X-Progress-ID' => @upload.uuid  %>',
             dataType: 'json',
             success: function(response) {
               if(response.state == "uploading") {
@@ -68,7 +68,7 @@
           } else {
             $.ajax({
               type: "POST",
-              url: 'uploads/' + responseJSON.id,
+              url: '<%= url_for(:controller => 'uploads', :trailing_slash => true) %>' + responseJSON.id,
               data: {
                 'authenticity_token': '<%= form_authenticity_token %>',
                 '_method': 'put',
